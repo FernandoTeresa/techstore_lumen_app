@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('users_info', function (Blueprint $table) {
             $table->id();
-            $table->string('name',80);
-            $table->longText('desc');
-            $table->float('price');
-            $table->integer('stock_quantity');
-            $table->foreignId('categories_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('address_1',80);
+            $table->string('address_2',100);
+            $table->string('city',30);
+            $table->integer('postal_code');
+            $table->string('country',30);
+            $table->integer('mobile');
+            $table->integer('telephone');
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();
         });
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('users_info');
     }
 };

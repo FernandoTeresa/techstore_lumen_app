@@ -13,6 +13,15 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->group(['middleware'=>'jwt.verify'],function($router) {
+
+    $router->post('/logout','AuthController@logout');//logout
+
 });
+
+
+$router->post('/login', 'AuthController@login'); //login
+
+$router->post('/register', 'UsersController@newUser'); // Register new user
+
+$router->get('/{id}','UsersController@getUser');

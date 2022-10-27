@@ -72,20 +72,24 @@ $app->configure('app');
 |
 */
 
-$app->middleware([
-    App\Http\Middleware\CorsMiddleware::class
-]);
+
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+    //'auth' => App\Http\Middleware\Authenticate::class,
     'jwt.verify' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
     'sync-origin' => App\Http\Middleware\SyncOriginMiddleware::class,
 ]);
 
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
-$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 
+
+
+
+$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +102,7 @@ $app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
 |
 */
 
+// $app->register(Illuminate\Redis\RedisServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
