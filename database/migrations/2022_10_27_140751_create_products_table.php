@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name',80);
             $table->longText('desc');
             $table->double('price');
-            $table->integer('stock_quantity');
-            $table->foreignId('sub_categories_id')->references('id')->on('sub_categories');
+            $table->integer('stock');
+            $table->foreignId('sub_categories_id')->nullable()->references('id')->on('sub_categories');
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();
         });

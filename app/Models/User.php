@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 use Illuminate\Support\ServiceProvider;
@@ -22,7 +23,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $fillable = [
-        'username', 'password', 'first_name', 'last_name', 'email', 'address_1', 'address_2', 'city', 'postal_code', 'country', 'mobile', 'telephone'
+        'username', 'password', 'first_name', 'last_name', 'email', 'admin'
     ];
 
     /**
@@ -31,9 +32,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $hidden = [
-        'password', 'high_permission'
+        'password', 'admin'
     ];
 
+    public function save(array $options = [])
+    {
+        if(isset($options['password']))
+        {
+            $this->password = Hash::make($options['password']);
+        }
+        if(!parent::save($options)){
+            return false;
+        }
+        return true;
+    }
 
 
     public function getJWTIdentifier()

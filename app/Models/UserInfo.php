@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Products extends Model implements AuthenticatableContract, AuthorizableContract
+use Illuminate\Support\ServiceProvider;
+
+class UserInfo extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
@@ -19,11 +21,11 @@ class Products extends Model implements AuthenticatableContract, AuthorizableCon
      * @var string[]
      */
     protected $fillable = [
-        'name', 'desc', 'price', 'stock', 'sub_categories_id'
+        'address_1', 'address_2', 'city', 'postal_code', 'country', 'mobile', 'telephone', 'users_id'
     ];
 
-    public function sub_categories(){
-        return $this->belongsTo(SubCategories::class, 'sub_categories_id');
+    public function user(){
+        return $this->belongsTo(User::class, 'users_id');
     }
 
 }

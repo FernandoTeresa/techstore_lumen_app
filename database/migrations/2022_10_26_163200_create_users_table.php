@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('first_name',50);
             $table->string('last_name',50);
             $table->string('email',80);
-            $table->boolean('high_permission')->default(false);
+            $table->boolean('admin')->default(false);
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();
         });

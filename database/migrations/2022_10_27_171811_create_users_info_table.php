@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users_info', function (Blueprint $table) {
+        Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
             $table->string('address_1',80);
             $table->string('address_2',100);
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('country',30);
             $table->integer('mobile');
             $table->integer('telephone');
+            $table->foreignId('users_id')->references('id')->on('users');
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();
         });

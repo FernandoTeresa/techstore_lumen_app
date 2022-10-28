@@ -23,14 +23,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'dudu',
             'last_name' => 'dos Montes',
             'email' => 'duduzinho@dudao.com',
-            // 'address_1' => 'Monte amarelo',
-            // 'address_2' => '',
-            // 'city' => 'Faro',
-            // 'postal_code' => '8000',
-            // 'country' => 'Espanha',
-            // 'mobile' => '913512512',
-            // 'telephone' => '289804829',
-            'high_permission' => false
+            'admin' => false
         ]);
 
         DB::table('users')->insert([
@@ -39,18 +32,37 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'fefe',
             'last_name' => 'oculinhos',
             'email' => 'fefe_glass@hotmail.com',
-            // 'address_1' => 'Num Prédio',
-            // 'address_2' => '',
-            // 'city' => 'Faro',
-            // 'postal_code' => '8005',
-            // 'country' => 'Portugal',
-            // 'mobile' => '913512777',
-            // 'telephone' => '289804345',
-            'high_permission' => true
+            'admin' => true
+        ]);
+
+        DB::table('user_infos')->insert([
+            'address_1' => 'Monte amarelo',
+            'address_2' => '',
+            'city' => 'Faro',
+            'postal_code' => '8000',
+            'country' => 'Espanha',
+            'mobile' => '913512512',
+            'telephone' => '289804829',
+            'users_id' => 1
+        ]);
+
+        DB::table('user_infos')->insert([
+            'address_1' => 'Num Prédio',
+            'address_2' => '',
+            'city' => 'Faro',
+            'postal_code' => '8005',
+            'country' => 'Portugal',
+            'mobile' => '913512777',
+            'telephone' => '289804345',
+            'users_id' => 2
         ]);
 
         DB::table('categories')->insert([
             'name' => 'Computers and Software'
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Printers'
         ]);
 
         DB::table('sub_categories')->insert([
@@ -58,13 +70,25 @@ class DatabaseSeeder extends Seeder
             'categories_id' => 1
         ]);
 
+        DB::table('sub_categories')->insert([
+            'name' => '3D',
+            'categories_id' => 2
+        ]);
+
         DB::table('products')->insert([
             'name'=> 'Apple MacBook Pro 2021',
             'desc' => 'Apple M1 Pro CPU-8 core, GPU-14 core e Neural Engine 16-core macOS 16-GB',
             'price' => 2099,
-            'stock_quantity' => 8,
+            'stock' => 8,
             'sub_categories_id' => 1
+        ]);
 
+        DB::table('products')->insert([
+            'name'=> 'printer Hp',
+            'desc' => 'muita nice',
+            'price' => 856.93,
+            'stock' => 2,
+            'sub_categories_id' => 2
         ]);
 
     }
