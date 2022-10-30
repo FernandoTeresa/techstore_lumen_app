@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('products_images', function (Blueprint $table) {
             $table->id();
-            $table->string('image',100);
+            $table->string('images',100);
             $table->foreignId('product_id')->references('id')->on('products');
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();

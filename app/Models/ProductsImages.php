@@ -19,7 +19,7 @@ class ProductsImages extends Model implements AuthenticatableContract, Authoriza
      * @var string[]
      */
     protected $fillable = [
-        'image', 'product_id'
+        'images', 'product_id'
     ];
 
     public function products(){
