@@ -21,11 +21,11 @@ class UserInfo extends Model implements AuthenticatableContract, AuthorizableCon
      * @var string[]
      */
     protected $fillable = [
-        'address_1', 'address_2', 'city', 'postal_code', 'country', 'mobile', 'telephone', 'users_id'
+        'address_1', 'address_2', 'city', 'postal_code', 'country', 'mobile', 'telephone', 'user_id'
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class);
     }
 
 }

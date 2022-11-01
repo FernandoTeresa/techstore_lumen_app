@@ -18,7 +18,9 @@ class UsersController extends Controller
     public function getUser($id)
     {
         $user = User::find($id);
-        return response()->json($user,200);
+        $userInfo = UserInfo::where(['user_id'=> $id]);
+
+        return response()->json($userInfo, 200);
     }
 
     public function register(Request $request)
@@ -40,7 +42,6 @@ class UsersController extends Controller
 
     public function updateUser(Request $request, $user_id)
     {
-
 
         $log = auth()->user();
         $payload = $request->all();
@@ -73,7 +74,7 @@ class UsersController extends Controller
         if ($log->id == $user_id){
 
             $user = User::where(['id' =>$user_id])->first();
-            $user_info = UserInfo::where(['users_id'=>$user_id])->first();
+            $user_info = UserInfo::where(['user_id'=>$user_id])->first();
         
             if ($request->password != $user->password){
                 $user->password = Hash::make($request->password);

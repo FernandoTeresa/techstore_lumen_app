@@ -15,7 +15,6 @@
 
 $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
-    $router->get('/products', 'ProductsController@getProducts');
     $router->post('/products/addnew', 'ProductsController@addProducts');
     $router->get('/product/{id}','ProductsController@getProduct');
     $router->delete('/product/remove/{id}', 'ProductsController@removeProduct');
@@ -36,13 +35,15 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     //User
     $router->put('/user/{user_id}','UsersController@updateUser');
     $router->post('/user/add', 'UsersController@newUser');
-
+    $router->get('/auth/user','AuthController@me');//authenticate user
+    $router->get('/user/info/{id}', 'UsersController@getUser');
     //Orders
 
     // Acessos
     $router->post('/logout','AuthController@logout');//logout
 });
 
+$router->get('/products', 'ProductsController@getProducts');
 
 $router->post('/login', 'AuthController@login'); //login
 $router->post('/register', 'UsersController@register'); // Register new user

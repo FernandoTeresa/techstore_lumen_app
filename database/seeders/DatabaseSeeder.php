@@ -35,26 +35,26 @@ class DatabaseSeeder extends Seeder
             'admin' => true
         ]);
 
-        DB::table('user_infos')->insert([
+        DB::table('userinfo')->insert([
             'address_1' => 'Monte amarelo',
             'address_2' => '',
             'city' => 'Faro',
             'postal_code' => '8000',
             'country' => 'Espanha',
-            'mobile' => '913512512',
-            'telephone' => '289804829',
-            'users_id' => 1
+            'mobile' => 913512512,
+            'telephone' => 289804829,
+            'user_id' => 1
         ]);
 
-        DB::table('user_infos')->insert([
+        DB::table('userinfo')->insert([
             'address_1' => 'Num Prédio',
             'address_2' => '',
             'city' => 'Faro',
             'postal_code' => '8005',
             'country' => 'Portugal',
-            'mobile' => '913512777',
-            'telephone' => '289804345',
-            'users_id' => 2
+            'mobile' => 913512777,
+            'telephone' => 289804345,
+            'user_id' => 2
         ]);
 
         DB::table('categories')->insert([
