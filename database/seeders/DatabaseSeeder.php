@@ -91,5 +91,29 @@ class DatabaseSeeder extends Seeder
             'sub_categories_id' => 2
         ]);
 
+        DB::table('products_images')->insert([
+            'images' => '/var/www/html/app/public/img/AppleMacBookPro2021/391.jpg',
+            'product_id' => 1
+        ]);
+
+        DB::table('products_images')->insert([
+            'images' => '/var/www/html/app/public/img/AppleMacBookPro2021/680.jpg',
+            'product_id' => 1
+        ]);
+
+        DB::table('products_images')->insert([
+            'images' => '/var/www/html/app/public/img/printerHp/852.jpg',
+            'product_id' => 2
+        ]);
+
+        DB::table('products_images')->insert([
+            'images' => '/var/www/html/app/public/img/printerHp/995.jpg',
+            'product_id' => 2
+        ]);
+
+
+
+        
+
     }
 }

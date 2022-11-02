@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\File;
 class CategoriesController extends Controller
 {
 
+    public function getCategories(){
+        $categories = Categories::where([])->get();
+        return response()->json($categories);
+    }
+
     public function addCategories(Request $request)
     {
 
@@ -31,30 +36,6 @@ class CategoriesController extends Controller
             $categories = new Categories($payload);
             $categories->save($payload);
             return response()->json($categories);
-        }else{
-            return response()->json([
-                'status' => '401',
-                'message' => 'Permission denied'
-            ]);
-        }
-
-    }
-
-    public function addSubCategories(Request $request)
-    {
-
-        $payload = $request->all();
-        $admin = auth()->user()->admin;
-
-        $this->validate($request, [
-            'name'=> 'required|string',
-            'categories_id' => 'required'
-        ]);
-
-        if($admin == 1){
-            $subcategories = new SubCategories($payload);
-            $subcategories->save($payload);
-            return response()->json($subcategories);
         }else{
             return response()->json([
                 'status' => '401',
@@ -87,39 +68,6 @@ class CategoriesController extends Controller
             ]);
         }
 
-    }
-
-    public function updateSubCategorie(Request $request, $id)
-    {
-        $payload = $request->all();
-        $admin = auth()->user()->admin;
-
-        $this->validate($request, [
-            'name'=> 'required|string',
-            'categories_id' => 'required|exists:categories,id'
-        ]);
-
-        $subcategorie = SubCategories::where(['id'=>$id])->first();
-
-        if ($admin == 1){
-            if ($subcategorie != null){
-                $subcategorie->name = $request->name;
-                $subcategorie->categories_id = $request->categories_id;
-                $subcategorie->save();
-            }else{
-                return response()->json([
-                    'status' => '404',
-                    'message' => 'Sub Categorie dont exist'
-                ]);
-            }
-            
-            return response()->json("Sub Categorie updated successfully!");
-        }else{
-            return response()->json([
-                'status' => '401',
-                'message' => 'Permission denied'
-            ]);
-        }
     }
 
     public function removeCategorie($id)
@@ -166,44 +114,5 @@ class CategoriesController extends Controller
         }
     }
 
-    public function removeSubCategorie($id){
-
-        $admin = auth()->user()->admin;
-        $subcategories = SubCategories::where(['categories_id'=>$id])->get();
-        $products = Products::where(['sub_categories_id'=>$id])->get();
-
-        if ($subcategories != null){
-
-            if($admin == 1){
-
-                if($products != null){
-                    foreach ($products as $product){
-                        $product->sub_categories_id = null;
-                        $product->save();
-                    }
-                }
-
-                if ($subcategories != null){
-
-                    foreach ($subcategories as $subcategorie) {
-                        $subcategorie->delete();
-                    }
-                }
-            }else{
-                return response()->json([
-                    'status' => '401',
-                    'message' => 'Unauthorized Request'
-                ]);
-            }
-
-            return response()->json("Sub Categories deleted successfully");
-        }else{
-
-            return response()->json([
-                'status' => '404',
-                'message' => 'Not Found'
-            ]);
-        }
-    }
 
 }

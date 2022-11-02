@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use  App\Models\User;
+use App\Models\UserInfo;
 use Carbon\Carbon;
 
 class AuthController extends Controller
@@ -54,7 +55,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $user=User::where(['id'=>auth()->user()->id])->first();
-        $userInfo= UserInfo::where(['user_id'=>auth()->user()->id])->first();
+        //$userInfo= UserInfo::where(['user_id'=>auth()->user()->id])->first();
         return response()->json([
             'access_token' => $token,
             'expires_in' => (auth()->factory()->getTTL() * 60 * 24) + Carbon::now()->timestamp,

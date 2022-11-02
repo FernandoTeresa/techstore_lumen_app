@@ -12,6 +12,16 @@ use Illuminate\Http\UploadedFile;
 class UploadController extends Controller
 {
 
+    public function getImages(){
+        $images = ProductsImages::where([])->get();
+        return response()->json($images, 200);
+    }
+
+
+    public function getImage($id){
+        $images = ProductsImages::where([])->get();
+        return response()->json($images,200);
+    }
 
    public function upload(Request $request, $id){
 
@@ -33,7 +43,7 @@ class UploadController extends Controller
                 foreach($imgs as $img){
 
                     $ext= $img->getClientOriginalExtension();
-                    $path = public_path('img/');
+                    $path = '/img/';
 
                     if(!File::isDirectory($path)){
                         File::makeDirectory($path, 0777, true, true);

@@ -18,9 +18,10 @@ class ProductsController extends Controller
 
    public function getProducts()
    {
-    $products = Products::where([])->with('sub_categories')->get();
+    $products = Products::where([])->get();
     return response()->json($products);
    }
+
 
    public function addProducts(Request $request)
    {

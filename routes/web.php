@@ -16,27 +16,29 @@
 $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
     $router->post('/products/addnew', 'ProductsController@addProducts');
-    $router->get('/product/{id}','ProductsController@getProduct');
     $router->delete('/product/remove/{id}', 'ProductsController@removeProduct');
     $router->put('/product/update/{id}','ProductsController@updateProduct');  // nao envia para a BD
+    
+    //upload Image
+    $router->post('/product/img/{id}','UploadController@upload');
 
-    $router->post('/product/{id}/img','UploadController@upload');// nao funciona
-
-    //Categories & SubCategories
+    //Categories
     $router->post('/categories/add','CategoriesController@addCategories');
-    $router->post('/subcategories/add', 'CategoriesController@addSubCategories');
-
     $router->put('/categorie/update/{id}', 'CategoriesController@updateCategorie');
-    $router->put('/subcategorie/update/{id}','CategoriesController@updateSubCategorie');
-
     $router->delete('/categorie/remove/{id}', 'CategoriesController@removeCategorie');
-    $router->delete ('/subcategorie/remove/{id}', 'CategoriesController@removeSubCategorie');
+    
+
+    //Subcategories
+    $router->post('/subcategories/add', 'SubcategoriesController@addSubCategories');
+    $router->put('/subcategorie/update/{id}','SubcategoriesController@updateSubCategorie');
+    $router->delete ('/subcategorie/remove/{id}', 'SubcategoriesController@removeSubCategorie');
 
     //User
     $router->put('/user/{user_id}','UsersController@updateUser');
     $router->post('/user/add', 'UsersController@newUser');
     $router->get('/auth/user','AuthController@me');//authenticate user
     $router->get('/user/info/{id}', 'UsersController@getUser');
+    
     //Orders
 
     // Acessos
@@ -45,6 +47,12 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
 });
 
 $router->get('/products', 'ProductsController@getProducts');
+$router->get('/products/{id}','ProductsController@getProduct');
+$router->get('/categories', 'CategoriesController@getCategories');
+$router->get('/subcategories', 'SubcategoriesController@getSubCategories');
+$router->get('/product/imgs','UploadController@getImages');
+
+$router->get('/product/imgs/{id}','UploadController@getImage');
 
 $router->post('/login', 'AuthController@login'); //login
 $router->post('/register', 'UsersController@register'); // Register new user
