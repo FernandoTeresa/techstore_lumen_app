@@ -21,7 +21,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     $router->delete('/product/remove/{id}', 'ProductsController@removeProduct');
     $router->put('/product/update/{id}','ProductsController@updateProduct');  // nao envia para a BD
 
-    $router->post('/product/{id}/img','ProductsController@uploadImage');// nao funciona
+    $router->post('/product/{id}/img','UploadController@upload');// nao funciona
 
     //Categories & SubCategories
     $router->post('/categories/add','CategoriesController@addCategories');
@@ -41,6 +41,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
 
     // Acessos
     $router->post('/logout','AuthController@logout');//logout
+    $router->get('/auth/user','AuthController@me'); //autenticação
 });
 
 
