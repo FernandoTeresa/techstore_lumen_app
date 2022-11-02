@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateUserinfoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_infos', function (Blueprint $table) {
+        Schema::create('userinfo', function (Blueprint $table) {
             $table->id();
             $table->string('address_1',80);
             $table->string('address_2',100);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('country',30);
             $table->integer('mobile');
             $table->integer('telephone');
-            $table->foreignId('users_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('created_at')->useCurrent();
         });
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_info');
+        Schema::dropIfExists('userinfo');
     }
-};
+}
