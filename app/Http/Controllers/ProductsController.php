@@ -18,7 +18,7 @@ class ProductsController extends Controller
 
    public function getProducts()
    {
-    $products = Products::where([])->get();
+    $products = Products::where([])->with('products_images')->get();
     return response()->json($products);
    }
 
@@ -52,7 +52,7 @@ class ProductsController extends Controller
    public function getProduct($id)
    {    
 
-    $product = Products::where(['id'=>$id])->with('sub_categories')->get();
+    $product = Products::where(['id'=>$id])->with('sub_categories')->with('products_images')->first();
     return response()->json($product);
 
    }

@@ -22,7 +22,7 @@ class ProductsImages extends Model implements AuthenticatableContract, Authoriza
         'images', 'product_id'
     ];
 
-    public function products(){
+    public function product(){
         return $this->belongsTo(Products::class, 'product_id');
     }
 

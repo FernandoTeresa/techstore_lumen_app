@@ -26,4 +26,8 @@ class Products extends Model implements AuthenticatableContract, AuthorizableCon
         return $this->belongsTo(SubCategories::class, 'sub_categories_id');
     }
 
+
+    public function products_images(){
+        return $this->hasMany(ProductsImages::class, 'product_id');
+    }
 }
