@@ -15,12 +15,10 @@ use Illuminate\Support\Facades\File;
 class UsersController extends Controller
 {
 
-    public function getUser($id)
+    public function getUserInfo($id)
     {
-        $user = User::find($id);
-        $userInfo = UserInfo::where(['user_id'=> $id]);
-
-        return response()->json($userInfo, 200);
+        $userinfo = UserInfo::where(['user_id'=>$id])->first();
+        return response()->json($userinfo,200);
     }
 
     public function register(Request $request)

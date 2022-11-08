@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders_items', function (Blueprint $table) {
-            $table->foreignId('order_id')->references('id')->on('orders');
+        Schema::create('order_items', function (Blueprint $table) {
+            $table->id();
+            $table->integer('count');
+            $table->integer('unitprice');
             $table->foreignId('product_id')->references('id')->on('products');
+            $table->foreignId('order_id')->references('id')->on('orders');
+            $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->useCurrent();
+
         });
     }
 
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders_items');
+        Schema::dropIfExists('order_items');
     }
 };

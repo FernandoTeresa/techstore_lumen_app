@@ -111,6 +111,17 @@ class DatabaseSeeder extends Seeder
             'product_id' => 2
         ]);
 
+        DB::table('orders')->insert([
+            'user_id' => 2,
+            'total' => 15000
+        ]);
+
+        DB::table('order_items')->insert([
+            'count' => 5,
+            'unitprice' => 350,
+            'product_id' => 1,
+            'order_id' => 1
+        ]);
 
 
         

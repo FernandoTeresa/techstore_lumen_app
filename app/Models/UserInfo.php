@@ -24,8 +24,10 @@ class UserInfo extends Model implements AuthenticatableContract, AuthorizableCon
         'address_1', 'address_2', 'city', 'postal_code', 'country', 'mobile', 'telephone', 'user_id'
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    protected $table='userinfo';
+
+    // public function user(){
+    //     return $this->belongsTo(User::class, 'user_id', 'id');
+    // }
 
 }

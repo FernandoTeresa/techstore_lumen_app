@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Orders extends Model implements AuthenticatableContract, AuthorizableContract
+class OrderItem extends Model
 {
-    use Authenticatable, Authorizable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,12 +18,18 @@ class Orders extends Model implements AuthenticatableContract, AuthorizableContr
      * @var string[]
      */
     protected $fillable = [
-        'user_id', 'total'
+        'count','unitprice','product_id','order_id'
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user_id');
+    public function order(){
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
+
+    public function product(){
+        return $this->hasMany(Products::class, 'product_id', 'id');
+    }
+
+    protected $table='order_items';
 
 
 }
