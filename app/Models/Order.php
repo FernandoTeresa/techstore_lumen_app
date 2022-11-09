@@ -26,7 +26,7 @@ class Order extends Model
     }
 
     public function order_items(){
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class)->with('product');
     }
 
     public function save(array $options =[])

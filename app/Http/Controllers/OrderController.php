@@ -20,8 +20,8 @@ class OrderController extends Controller
 
     public function getOrder(){
 
-        $order = Order::where([])->with('order_items')->get();
-        return response()->json($order);
+        $orders = Order::where([])->with('order_items')->get();
+        return response()->json($orders);
     }
 
     public function addOrder(Request $request){
@@ -37,5 +37,12 @@ class OrderController extends Controller
         $order->save($payload);
     
     }
+
+    public function getOrderById($id){
+        $orders = Order::where(['user_id'=>$id])->with('order_items')->get();
+        return response()->json($orders);
+    }
+
+    
 
 }

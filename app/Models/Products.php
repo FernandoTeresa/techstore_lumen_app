@@ -29,4 +29,6 @@ class Products extends Model
     public function products_images(){
         return $this->hasMany(ProductsImages::class, 'product_id');
     }
+
+    protected $table = "products";
 }

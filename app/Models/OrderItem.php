@@ -26,7 +26,7 @@ class OrderItem extends Model
     }
 
     public function product(){
-        return $this->hasMany(Products::class, 'product_id', 'id');
+        return $this->hasOne(Products::class, 'id', 'product_id');
     }
 
     protected $table='order_items';
