@@ -38,6 +38,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     $router->post('/user/add', 'UsersController@newUser');
     $router->get('/auth/user','AuthController@me');//authenticate user
     $router->get('/user/info/{id}', 'UsersController@getUserInfo');
+    $router->put('/user/info/{id}', 'UsersController@updateUserInfo');
     
     //Orders
     $router->get('/order','OrderController@getOrder');

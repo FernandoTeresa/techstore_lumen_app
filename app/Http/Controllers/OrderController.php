@@ -19,8 +19,9 @@ class OrderController extends Controller
 {
 
     public function getOrder(){
+        $userId = auth()->user()->id;
 
-        $orders = Order::where([])->with('order_items')->get();
+        $orders = Order::where(['user_id'=> $userId])->with('order_items')->get();
         return response()->json($orders);
     }
 
@@ -39,10 +40,10 @@ class OrderController extends Controller
     }
 
     public function getOrderById($id){
-        $orders = Order::where(['user_id'=>$id])->with('order_items')->get();
+        $orders = Order::where(['id'=>$id])->with('order_items')->first();
         return response()->json($orders);
     }
 
-    
+
 
 }
