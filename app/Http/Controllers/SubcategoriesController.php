@@ -17,7 +17,7 @@ class SubcategoriesController extends Controller
 {
 
     public function getSubCategories(){
-        $subcategories = SubCategories::where([])->get();
+        $subcategories = SubCategories::where([])->with('categories')->get();
         return response()->json($subcategories);
    }
 

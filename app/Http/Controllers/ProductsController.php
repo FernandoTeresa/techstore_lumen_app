@@ -62,6 +62,8 @@ class ProductsController extends Controller
         $admin = auth()->user()->admin;
 
         $product = Products::where(['id'=>$id])->first();
+        $productImages = ProductsImages::where(['product_id'=>$id])->first();
+        $orderItems = OrderItem::where(['product_id'=>$id])->get();
 
         if ($product != null){
             if ($admin == 1){

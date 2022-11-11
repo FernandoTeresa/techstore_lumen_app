@@ -15,9 +15,9 @@
 
 $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
-    $router->post('/products/addnew', 'ProductsController@addProducts');
-    $router->delete('/product/remove/{id}', 'ProductsController@removeProduct');
-    $router->put('/product/update/{id}','ProductsController@updateProduct');  // nao envia para a BD
+    $router->post('/product/addnew', 'ProductsController@addProducts');
+    $router->delete('/product/{id}', 'ProductsController@removeProduct');
+    $router->put('/product/{id}','ProductsController@updateProduct');  // nao envia para a BD
     
     //upload Image
     $router->post('/product/img/{id}','UploadController@upload');

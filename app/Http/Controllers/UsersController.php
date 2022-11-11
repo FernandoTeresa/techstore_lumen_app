@@ -23,7 +23,7 @@ class UsersController extends Controller
 
     public function register(Request $request)
     {
-    
+        
         $this->validate($request, [
             'username'=> 'required|unique:users,username',
             'password'=> ['required', Password::min(8)],
@@ -75,6 +75,9 @@ class UsersController extends Controller
             $user_info = UserInfo::where(['user_id'=>$user_id])->first();
         
             if ($request->password != $user->password){
+                if ($request->password === ""){
+                    $user->password = $request->password;
+                }
                 $user->password = Hash::make($request->password);
             }
 
@@ -119,7 +122,6 @@ class UsersController extends Controller
             if($request->telephone != $user_info->telephone){
                 $user_info->telephone = $request->telephone;
             }
-
 
             $user->save();
             $user_info->save();
