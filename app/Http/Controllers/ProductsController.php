@@ -22,7 +22,6 @@ class ProductsController extends Controller
     return response()->json($products);
    }
 
-
    public function addProducts(Request $request)
    {
 
@@ -34,7 +33,7 @@ class ProductsController extends Controller
         'desc' => 'required|string',
         'price' => 'required|regex:/^\d*(\.\d{2})?$/',
         'stock' => 'required|integer',
-        'sub_categories_id' => 'required | exists:sub_categories, id'
+        'sub_categories_id' => 'required'
     ]);
 
     if ($admin == 1){

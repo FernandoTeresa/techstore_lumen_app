@@ -17,26 +17,26 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
     $router->post('/product/addnew', 'ProductsController@addProducts');
     $router->delete('/product/{id}', 'ProductsController@removeProduct');
-    $router->put('/product/{id}','ProductsController@updateProduct');  // nao envia para a BD
+    $router->put('/product/{id}','ProductsController@updateProduct');
     
     //upload Image
     $router->post('/product/img/{id}','UploadController@upload');
+    $router->post('/product/img', 'UploadController@uploadNewImage');
 
     //Categories
-    $router->post('/categories/add','CategoriesController@addCategories');
-    $router->put('/categorie/update/{id}', 'CategoriesController@updateCategorie');
-    $router->delete('/categorie/remove/{id}', 'CategoriesController@removeCategorie');
+    $router->post('/categories','CategoriesController@addCategories');
+    $router->put('/category/{id}', 'CategoriesController@updateCategorie');
+    $router->delete('/category/{id}', 'CategoriesController@removeCategorie');
     
 
     //Subcategories
-    $router->post('/subcategories/add', 'SubcategoriesController@addSubCategories');
-    $router->put('/subcategorie/update/{id}','SubcategoriesController@updateSubCategorie');
-    $router->delete ('/subcategorie/remove/{id}', 'SubcategoriesController@removeSubCategorie');
+    $router->post('/subcategories', 'SubcategoriesController@addSubCategories');
+    $router->put('/subcategorie/{id}','SubcategoriesController@updateSubCategorie');
+    $router->delete ('/subcategorie/{id}', 'SubcategoriesController@removeSubCategorie');
 
     //User
     $router->put('/user/{user_id}','UsersController@updateUser');
     $router->post('/user/add', 'UsersController@newUser');
-    $router->get('/auth/user','AuthController@me');//authenticate user
     $router->get('/user/info/{id}', 'UsersController@getUserInfo');
     $router->put('/user/info/{id}', 'UsersController@updateUserInfo');
     
