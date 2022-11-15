@@ -29,7 +29,7 @@ class ProductsController extends Controller
     $admin = auth()->user()->admin;
 
     $this->validate($request,[
-        'name' => 'required|string',
+        'name' => 'required|string|unique:products',
         'desc' => 'required|string',
         'price' => 'required|regex:/^\d*(\.\d{2})?$/',
         'stock' => 'required|integer',
@@ -37,9 +37,12 @@ class ProductsController extends Controller
     ]);
 
     if ($admin == 1){
-        $products = new Products($payload);
-        $products->save($payload);
-        return response()->json($products);
+        $product = new Products($payload);
+        if ($product->save($payload)){
+
+        }
+
+        return response()->json($product);
     }else{
         return response()->json([
             'status' => '401',
@@ -93,7 +96,7 @@ class ProductsController extends Controller
         $payload = $request->all();
 
         $this->validate($request,[
-            'name' => 'required|string',
+            'name' => 'required|string|unique:products',
             'desc' => 'required|string',
             'price' => 'required',
             'stock' => 'required|integer',

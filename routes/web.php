@@ -15,7 +15,7 @@
 
 $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
-    $router->post('/product/addnew', 'ProductsController@addProducts');
+    $router->post('/product', 'ProductsController@addProducts');
     $router->delete('/product/{id}', 'ProductsController@removeProduct');
     $router->put('/product/{id}','ProductsController@updateProduct');
     
@@ -27,7 +27,6 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     $router->post('/categories','CategoriesController@addCategories');
     $router->put('/category/{id}', 'CategoriesController@updateCategorie');
     $router->delete('/category/{id}', 'CategoriesController@removeCategorie');
-    
 
     //Subcategories
     $router->post('/subcategories', 'SubcategoriesController@addSubCategories');

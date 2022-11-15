@@ -39,58 +39,45 @@ class Products extends Model
             return false;
         }
 
-        if(isset($options['images'])){
+        if(isset($options['images']) && is_array($options['images'])){
 
-            $productName = $options['name'];
-            $imgs = $options['images'];
-
-            foreach($imgs as $img){
-
-                $ext= $img->getClientOriginalExtension();
-                $path = 'img/';
-
-                if(!File::isDirectory($path)){
-                    File::makeDirectory($path, 0777, true, true);
-                }
-
-                $random_name = rand(1,1000);
-                $name = $random_name.'.' . $ext;
-                $dirname = preg_replace(' /\s+/ ', '', $productName);
-                $endpath = $path.$dirname;
-
-                if(!File::isDirectory($endpath)){
-                    File::makeDirectory($endpath, 0777, true, true);
-                }
-
-                $img->move($endpath,$name);
-
-                $data= $endpath.'/'.$name;
-                $file = new ProductsImages();
-                $file->images = $data;
-                $file->product_id = $this->id;
-                $file->save();
-            }
+            $this->save_images($options['images']);
 
         }
 
         return true;
     }
+
+    private function save_images($file_array)
+    {  
+        $productName = $this->name;
+        $imgs =$file_array;
+
+        foreach($imgs as $img){
+
+            $ext= $img->getClientOriginalExtension();
+            $path = 'img/';
+
+            if(!File::isDirectory($path)){
+                File::makeDirectory($path, 0777, true, true);
+            }
+
+            $random_name = rand(1,1000);
+            $name = $random_name.'.' . $ext;
+            $dirname = preg_replace(' /\s+/ ', '', $productName);
+            $endpath = $path.$dirname;
+
+            if(!File::isDirectory($endpath)){
+                File::makeDirectory($endpath, 0777, true, true);
+            }
+
+            $img->move($endpath,$name);
+
+            $data= $endpath.'/'.$name;
+            $file = new ProductsImages();
+            $file->images = $data;
+            $file->product_id = $this->id;
+            $file->save();
+        }
+    }
 }
-
-
-
-// private function save_images($file_array)
-//     {  
-//         $configs_path = $this->get_config_path();
-//         foreach ($file_array as $file) {
-//             $file_name = $file->new_name;
-//             $new_file_path = $configs_path . "/" . $file_name;
-//             $partial_url = $this->id . "/" . $file_name;
-//             $ext = $file->extension();
-//             move_uploaded_file($file->getPathname(), $new_file_path);
-//             chmod($new_file_path, 0644);
-//             $checksum =  hash_file('md5', $new_file_path);
-//             $config = new PrinterConfig(['url' => $partial_url , 'printer_ticket_id' => $this->id, "checksum" => $checksum , "filetype" => $ext]);
-//             $config->save();
-//         }
-//     }

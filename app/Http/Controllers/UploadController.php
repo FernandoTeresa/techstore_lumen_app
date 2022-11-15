@@ -31,7 +31,7 @@ class UploadController extends Controller
 
 
         $this->validate($request, [
-            'images'=>'required',
+            'images'=>'required|unique:products_images',
             'images.*'=>'mimes:png,jpeg,jpg,gif'
 
         ]);
