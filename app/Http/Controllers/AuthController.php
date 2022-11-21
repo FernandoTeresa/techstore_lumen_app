@@ -32,6 +32,22 @@ class AuthController extends Controller
     }
 
 
+    public function checkPass(Request $request){
+
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $credentials = $request->only(['username', 'password']);
+
+        if (! $token = Auth::attempt($credentials)) {
+            return response()->json(401);
+        }
+            return response()->json(200);
+
+    }
+
     public function me(Request $request)
     {
         return response()->json(auth()->user());

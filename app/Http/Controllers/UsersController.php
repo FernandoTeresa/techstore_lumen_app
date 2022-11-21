@@ -73,12 +73,18 @@ class UsersController extends Controller
 
             $user = User::where(['id' =>$user_id])->first();
             $user_info = UserInfo::where(['user_id'=>$user_id])->first();
+
         
             if ($request->password != $user->password){
-                if ($request->password === ""){
-                    $user->password = $request->password;
+                
+                if ($request->password == ""){
+                    
+                    $request->password = $user->password;
+
+                }else{
+                    $user->password = Hash::make($request->password);
                 }
-                $user->password = Hash::make($request->password);
+                
             }
 
             if ($request->first_name != $user->first_name){
@@ -155,5 +161,7 @@ class UsersController extends Controller
         return response()->json($user,200);
     }
 
+
+    
 
 }

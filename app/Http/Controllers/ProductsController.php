@@ -96,18 +96,16 @@ class ProductsController extends Controller
         $payload = $request->all();
 
         $this->validate($request,[
-            'name' => 'required|string|unique:products',
+            'name' => 'required|string',
             'desc' => 'required|string',
             'price' => 'required',
             'stock' => 'required|integer',
             'sub_categories_id' => 'required'
         ]);
 
-        $product = Products::where(['id'=>$id])->first();
-
         if ($admin == 1){
-            $product = $payload;
-            $product->save();
+
+            $product = Products::where(['id'=>$id])->update($payload);
 
             return response()->json("Product updated successfully!");
         }else{

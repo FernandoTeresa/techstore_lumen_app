@@ -35,7 +35,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
 
     //User
     $router->put('/user/{user_id}','UsersController@updateUser');
-    $router->post('/user/add', 'UsersController@newUser');
+    $router->post('/user', 'UsersController@newUser');
     $router->get('/user/info/{id}', 'UsersController@getUserInfo');
     $router->put('/user/info/{id}', 'UsersController@updateUserInfo');
     
@@ -47,6 +47,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     // Acessos
     $router->post('/logout','AuthController@logout');//logout
     $router->get('/auth/user','AuthController@me'); //autenticação
+    $router->post('/check','AuthController@checkPass'); //validate old password
 });
 
 $router->get('/products', 'ProductsController@getProducts');
