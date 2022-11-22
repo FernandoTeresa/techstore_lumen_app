@@ -16,7 +16,7 @@
 $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Products
     $router->post('/product', 'ProductsController@addProducts');
-    $router->delete('/product/{id}', 'ProductsController@removeProduct');
+    // $router->delete('/product/{id}', 'ProductsController@removeProduct');
     $router->put('/product/{id}','ProductsController@updateProduct');
     
     //upload Image

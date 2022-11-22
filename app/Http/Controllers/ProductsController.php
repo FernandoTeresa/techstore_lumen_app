@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\SubCategories;
 use App\Models\ProductsImages;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
@@ -59,36 +60,36 @@ class ProductsController extends Controller
 
    }
 
-   public function removeProduct($id){
+//    public function removeProduct($id){
 
-        $admin = auth()->user()->admin;
+//         $admin = auth()->user()->admin;
 
-        $product = Products::where(['id'=>$id])->first();
-        $productImages = ProductsImages::where(['product_id'=>$id])->first();
-        $orderItems = OrderItem::where(['product_id'=>$id])->get();
+//         $product = Products::where(['id'=>$id])->first();
+//         $productImages = ProductsImages::where(['product_id'=>$id])->first();
+//         $orderItems = OrderItem::where(['product_id'=>$id])->get();
 
-        if ($product != null){
-            if ($admin == 1){
-                $product->delete();
-            }else{
-                return response()->json([
-                    'status' => '401',
-                    'message' => 'Unauthorized Request'
-                ]);
+//         if ($product != null){
+//             if ($admin == 1){
+//                 $product->delete();
+//             }else{
+//                 return response()->json([
+//                     'status' => '401',
+//                     'message' => 'Unauthorized Request'
+//                 ]);
 
-            }
-            return response()->json('Product deleted successfully!'); 
+//             }
+//             return response()->json('Product deleted successfully!'); 
             
-        }else{
+//         }else{
 
-            return response()->json([
-                'status' => '404',
-                'message' => 'Product not found !!'
-            ]);
+//             return response()->json([
+//                 'status' => '404',
+//                 'message' => 'Product not found !!'
+//             ]);
 
-        }
+//         }
 
-   }
+//    }
 
    public function updateProduct(Request $request, $id)
    {

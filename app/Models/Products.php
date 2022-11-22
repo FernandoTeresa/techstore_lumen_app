@@ -56,7 +56,7 @@ class Products extends Model
         foreach($imgs as $img){
 
             $ext= $img->getClientOriginalExtension();
-            $path = 'img/';
+            $path = '/img/';
 
             if(!File::isDirectory($path)){
                 File::makeDirectory($path, 0777, true, true);
