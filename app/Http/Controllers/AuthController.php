@@ -14,7 +14,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
         $this->validate($request, [
             'username' => 'required|string',
             'password' => 'required|string',
@@ -26,27 +25,10 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-
         return $this->respondWithToken($token);
 
     }
 
-
-    public function checkPass(Request $request){
-
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        $credentials = $request->only(['username', 'password']);
-
-        if (! $token = Auth::attempt($credentials)) {
-            return response()->json(401);
-        }
-            return response()->json(200);
-
-    }
 
     public function me(Request $request)
     {

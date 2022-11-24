@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\File;
@@ -41,19 +42,19 @@ class UsersController extends Controller
     public function updateUser(Request $request, $user_id)
     {
 
-        $log = auth()->user();
+        $auth = auth()->user();
         $payload = $request->all();
         $this->validate($request, [
-            'password'=> [Password::min(8)],
-            'raw_password' =>
-            [
+            'old_password' => [Password::min(5)],
+            'password'=>[Password::min(5)],
+            'raw_password' =>[
             
                 function ($attribute, $value, $fail) use ($payload) {
 
                     if($payload['password'] != $value){
                         $fail('Passwords dont match');
                     }
-                },Password::min(8)
+                },Password::min(5)
             ],
 
             'first_name'=> 'string',
@@ -69,22 +70,24 @@ class UsersController extends Controller
             'telephone' => 'integer'
         ]);
 
-        if ($log->id == $user_id){
+       
+
+        if ($auth->id == $user_id){
 
             $user = User::where(['id' =>$user_id])->first();
             $user_info = UserInfo::where(['user_id'=>$user_id])->first();
 
-        
-            if ($request->password != $user->password){
-                
-                if ($request->password == ""){
-                    
-                    $request->password = $user->password;
 
-                }else{
-                    $user->password = Hash::make($request->password);
-                }
-                
+                if ($request->new_password != $user->password){
+                    
+                    if ($request->new_password == ""){
+                        
+                        $request->new_password = $user->password;
+
+                    }else{
+                        $user->password = Hash::make($request->new_password);
+                    }
+
             }
 
             if ($request->first_name != $user->first_name){

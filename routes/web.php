@@ -47,7 +47,6 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     // Acessos
     $router->post('/logout','AuthController@logout');//logout
     $router->get('/auth/user','AuthController@me'); //autenticação
-    $router->post('/check','AuthController@checkPass'); //validate old password
 });
 
 $router->get('/products', 'ProductsController@getProducts');

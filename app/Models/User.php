@@ -41,6 +41,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         {
             $this->password = Hash::make($options['password']);
         }
+
         if(!parent::save($options)){
             return false;
         }
