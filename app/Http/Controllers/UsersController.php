@@ -44,8 +44,19 @@ class UsersController extends Controller
 
         $auth = auth()->user();
         $payload = $request->all();
+
+        $user = User::where(['id' =>$user_id])->first();
+        $user_info = UserInfo::where(['user_id'=>$user_id])->first();
+
         $this->validate($request, [
-            'old_password' => [Password::min(5)],
+            'old_password' => [
+                function ($attribute, $value, $fail) use ($auth){
+                    
+                    if (! password_verify($value, $auth->password)) {
+                        $fail('Current Password didn\'t match');
+                    }
+            },Password::min(5)],
+
             'password'=>[Password::min(5)],
             'raw_password' =>[
             
@@ -70,23 +81,18 @@ class UsersController extends Controller
             'telephone' => 'integer'
         ]);
 
-       
 
         if ($auth->id == $user_id){
 
-            $user = User::where(['id' =>$user_id])->first();
-            $user_info = UserInfo::where(['user_id'=>$user_id])->first();
-
-
-                if ($request->new_password != $user->password){
+            if ($request->password != $user->password){
+                
+                if ($request->password == ""){
                     
-                    if ($request->new_password == ""){
-                        
-                        $request->new_password = $user->password;
+                    $request->password = $user->password;
 
-                    }else{
-                        $user->password = Hash::make($request->new_password);
-                    }
+                }else{
+                    $user->password = Hash::make($request->password);
+                }
 
             }
 
