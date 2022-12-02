@@ -49,6 +49,8 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     $router->get('/auth/user','AuthController@me'); //autenticação
 });
 
+
+$router->post('/search','ProductsController@filter'); // filter product
 $router->get('/products', 'ProductsController@getProducts');
 $router->get('/products/{id}','ProductsController@getProduct');
 $router->get('/categories', 'CategoriesController@getCategories');

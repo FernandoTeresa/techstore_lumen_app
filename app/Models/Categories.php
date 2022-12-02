@@ -22,5 +22,8 @@ class Categories extends Model implements AuthenticatableContract, AuthorizableC
         'name',
     ];
 
+    public function sub_categories(){
+        return $this->hasOne(SubCategories::class, 'id');
+    }
 
 }

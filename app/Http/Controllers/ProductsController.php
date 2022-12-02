@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\SubCategories;
+use App\Models\Categories;
 use App\Models\ProductsImages;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\Password;
@@ -60,37 +62,6 @@ class ProductsController extends Controller
 
    }
 
-//    public function removeProduct($id){
-
-//         $admin = auth()->user()->admin;
-
-//         $product = Products::where(['id'=>$id])->first();
-//         $productImages = ProductsImages::where(['product_id'=>$id])->first();
-//         $orderItems = OrderItem::where(['product_id'=>$id])->get();
-
-//         if ($product != null){
-//             if ($admin == 1){
-//                 $product->delete();
-//             }else{
-//                 return response()->json([
-//                     'status' => '401',
-//                     'message' => 'Unauthorized Request'
-//                 ]);
-
-//             }
-//             return response()->json('Product deleted successfully!'); 
-            
-//         }else{
-
-//             return response()->json([
-//                 'status' => '404',
-//                 'message' => 'Product not found !!'
-//             ]);
-
-//         }
-
-//    }
-
    public function updateProduct(Request $request, $id)
    {
         $admin = auth()->user()->admin;
@@ -117,5 +88,21 @@ class ProductsController extends Controller
         }
    }
 
+
+   public function filter(Request $request){
+
+        $this->validate($request,[
+            'search' => 'required|string'
+        ]);
+
+        $products = Products::where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('desc', 'like', '%' . request('search') . '%')
+                ->orWhere('price','like', '%' . request('search') . '%')
+                ->with('products_images')
+                ->get();
+
+        return response()->json(['Products'=>$products]);
+
+   }
    
 }
