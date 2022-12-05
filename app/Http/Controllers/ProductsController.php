@@ -92,14 +92,14 @@ class ProductsController extends Controller
    public function filter(Request $request){
 
         $this->validate($request,[
-            'search' => 'required|string'
+            'search' => 'string'
         ]);
 
-        $products = Products::where('name', 'like', '%' . request('search') . '%')
-                ->orWhere('desc', 'like', '%' . request('search') . '%')
-                ->orWhere('price','like', '%' . request('search') . '%')
+        $products = Products::where('name', 'like', request('search') . '%')
+                ->orWhere('price','like', request('search') . '%')
                 ->with('products_images')
                 ->get();
+       
 
         return response()->json(['Products'=>$products]);
 
