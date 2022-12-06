@@ -1,5 +1,7 @@
 <?php
 
+// echo '<pre>' . print_r(,true) . '<pre>'; die;
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -127,7 +129,7 @@ class ProductsController extends Controller
    }
 
    public function filterByCategories(Request $request){
-
+        $data = [];
         $this->validate($request, [
             'categories_id'=> 'required'
         ]);
@@ -138,15 +140,24 @@ class ProductsController extends Controller
 
         foreach ($subcategories as $key => $subcategorie) {
 
-            $products = Products::where('sub_categories_id', $subcategorie['id'])
+            $products = Products::where('sub_categories_id', $subcategorie->id)
                 ->get();
 
-            $data[$key]=$products;
+            $data[] = $products;
         }
-
-
         return response()->json([$data]);
+   }
 
+   public function filterBySubcategories(Request $request){
+        $this->validate($request, [
+            'sub_categories_id'=> 'required'
+        ]);
+
+        $products = Products::where('sub_categories_id', request('sub_categories_id'))
+                ->get();
+            
+        return response()->json([$products]);
+    
    }
    
 }
