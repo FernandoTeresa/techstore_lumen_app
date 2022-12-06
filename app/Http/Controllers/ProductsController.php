@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Arr;
 
 
 class ProductsController extends Controller
@@ -95,13 +96,56 @@ class ProductsController extends Controller
             'search' => 'string'
         ]);
 
-        $products = Products::where('name', 'like', request('search') . '%')
-                ->orWhere('price','like', request('search') . '%')
+        $products = Products::where('name', 'like', '%' . request('search') . '%')
                 ->with('products_images')
                 ->get();
        
-
         return response()->json(['Products'=>$products]);
+
+   }
+
+   public function filterByPrice(Request $request){
+
+        $this->validate($request, [
+            'min' => 'required',
+            'max' => 'required|regex:/^\d*(\.\d{2})?$/'
+        ]);
+
+        $min = $request->min;
+        $max = $request->max;
+
+        if ($min < 0){
+            return response()->json(['message'=>'cannot have numbers minus 0']);
+        }
+
+        $products = Products::where('price', '>=', $min)
+            ->where('price','<=', $max)
+            ->get();
+
+        return response()->json(['Price'=>$products]);
+
+   }
+
+   public function filterByCategories(Request $request){
+
+        $this->validate($request, [
+            'categories_id'=> 'required'
+        ]);
+
+
+        $subcategories= SubCategories::where('categories_id', request('categories_id'))
+            ->get();
+
+        foreach ($subcategories as $key => $subcategorie) {
+
+            $products = Products::where('sub_categories_id', $subcategorie['id'])
+                ->get();
+
+            $data[$key]=$products;
+        }
+
+
+        return response()->json([$data]);
 
    }
    

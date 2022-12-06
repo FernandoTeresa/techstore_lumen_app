@@ -49,14 +49,19 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     $router->get('/auth/user','AuthController@me'); //autenticação
 });
 
+//filter
+$router->post('/search','ProductsController@filter');
+$router->post('/search/byprice','ProductsController@filterByPrice');
+$router->post('/search/bycategories','ProductsController@filterByCategories');
 
-$router->post('/search','ProductsController@filter'); // filter product
+//get products, categories, sub-categories
 $router->get('/products', 'ProductsController@getProducts');
 $router->get('/products/{id}','ProductsController@getProduct');
 $router->get('/categories', 'CategoriesController@getCategories');
 $router->get('/subcategories', 'SubcategoriesController@getSubCategories');
-$router->get('/product/imgs','UploadController@getImages');
 
+//images
+$router->get('/product/imgs','UploadController@getImages');
 $router->get('/product/imgs/{id}','UploadController@getImage');
 
 $router->post('/login', 'AuthController@login'); //login
