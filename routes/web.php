@@ -51,9 +51,6 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
 
 //filter
 $router->post('/search','ProductsController@filter');
-$router->post('/search/byprice','ProductsController@filterByPrice');
-$router->post('/search/bycategories','ProductsController@filterByCategories');
-$router->post('/search/bysubcategories','ProductsController@filterBySubcategories');
 
 //get products, categories, sub-categories
 $router->get('/products', 'ProductsController@getProducts');

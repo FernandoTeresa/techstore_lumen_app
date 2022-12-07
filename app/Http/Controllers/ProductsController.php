@@ -94,70 +94,36 @@ class ProductsController extends Controller
 
    public function filter(Request $request){
 
+        $data = [];
+
         $this->validate($request,[
-            'search' => 'string'
-        ]);
-
-        $products = Products::where('name', 'like', '%' . request('search') . '%')
-                ->with('products_images')
-                ->get();
-       
-        return response()->json(['Products'=>$products]);
-
-   }
-
-   public function filterByPrice(Request $request){
-
-        $this->validate($request, [
-            'min' => 'required',
-            'max' => 'required|regex:/^\d*(\.\d{2})?$/'
+            'search' => 'string',
+            'min' => 'string',
+            'max' => 'string',
+            'sub_categories_id'=> 'string'
         ]);
 
         $min = $request->min;
         $max = $request->max;
 
-        if ($min < 0){
-            return response()->json(['message'=>'cannot have numbers minus 0']);
+        if ($min < 1){
+            return response()->json(['message'=>'cannot have numbers minus 1€']);
         }
 
-        $products = Products::where('price', '>=', $min)
-            ->where('price','<=', $max)
-            ->get();
-
-        return response()->json(['Price'=>$products]);
-
-   }
-
-   public function filterByCategories(Request $request){
-        $data = [];
-        $this->validate($request, [
-            'categories_id'=> 'required'
-        ]);
-
-
-        $subcategories= SubCategories::where('categories_id', request('categories_id'))
-            ->get();
-
-        foreach ($subcategories as $key => $subcategorie) {
-
-            $products = Products::where('sub_categories_id', $subcategorie->id)
+        $products = Products::where('name', 'like', '%' . request('search') . '%')
                 ->get();
 
-            $data[] = $products;
-        }
-        return response()->json([$data]);
+        foreach($products as $product){
+
+            if (($product->price >= $min && $product->price <= $max) || $product->sub_categories_id == $request->sub_categories_id){
+                $data[] = $product;
+            }
+        }            
+        
+       
+        return response()->json(['Products'=>$data]);
+
    }
 
-   public function filterBySubcategories(Request $request){
-        $this->validate($request, [
-            'sub_categories_id'=> 'required'
-        ]);
-
-        $products = Products::where('sub_categories_id', request('sub_categories_id'))
-                ->get();
-            
-        return response()->json([$products]);
-    
-   }
    
 }
