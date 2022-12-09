@@ -100,13 +100,14 @@ class ProductsController extends Controller
             'search' => 'string',
             'min' => 'string',
             'max' => 'string',
-            'sub_categories_id'=> 'string'
+            'sub_categories_id'=> 'string',
+            'stock'=>'boolean'
         ]);
 
         $min = $request->min;
         $max = $request->max;
 
-        if ($min < 1){
+        if ($min < 0){
             return response()->json(['message'=>'cannot have numbers minus 1€']);
         }
 
@@ -116,7 +117,15 @@ class ProductsController extends Controller
         foreach($products as $product){
 
             if (($product->price >= $min && $product->price <= $max) || $product->sub_categories_id == $request->sub_categories_id){
-                $data[] = $product;
+                if ($request->stock === true && $product->stock > 1){
+                    $data[] = $product;
+                }
+
+                if ($request->stock === false && $product->stock < 1){
+                    $data[] = $product;
+                }
+    
+                //nao esta a mandar resultados
             }
         }            
         
