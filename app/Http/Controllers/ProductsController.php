@@ -91,16 +91,12 @@ class ProductsController extends Controller
         }
    }
 
-
    public function filter(Request $request){
 
         $data = [];
 
         $this->validate($request,[
             'search' => 'string',
-            'min' => 'string',
-            'max' => 'string',
-            'sub_categories_id'=> 'string',
             'stock'=>'boolean'
         ]);
 
@@ -112,6 +108,7 @@ class ProductsController extends Controller
         }
 
         $products = Products::where('name', 'like', '%' . request('search') . '%')
+                ->with('products_images')
                 ->get();
 
         foreach($products as $product){
@@ -125,7 +122,6 @@ class ProductsController extends Controller
                     $data[] = $product;
                 }
     
-                //nao esta a mandar resultados
             }
         }            
         
