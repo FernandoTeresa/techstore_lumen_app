@@ -4,4 +4,4 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
-/.test_docker
+/test_docker/docker-compose.yml
