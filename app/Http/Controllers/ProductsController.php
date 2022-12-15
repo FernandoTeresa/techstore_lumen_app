@@ -109,11 +109,12 @@ class ProductsController extends Controller
 
         $products = Products::where('name', 'like', '%' . request('search') . '%')
                 ->with('products_images')
+                ->with('sub_categories')
                 ->get();
 
         foreach($products as $product){
 
-            if (($product->price >= $min && $product->price <= $max) || $product->sub_categories_id == $request->sub_categories_id){
+            if (($product->price >= $min && $product->price <= $max) || $product->sub_categories_id === $request->sub_categories_id){
                 if ($request->stock === true && $product->stock > 1){
                     $data[] = $product;
                 }
