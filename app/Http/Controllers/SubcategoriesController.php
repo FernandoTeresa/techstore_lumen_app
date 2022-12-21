@@ -78,45 +78,46 @@ class SubcategoriesController extends Controller
        }
    }
 
-   public function removeSubCategorie($id){
+   public function removeSubCategorie($id)
+   {
 
-    $admin = auth()->user()->admin;
-    $subcategories = SubCategories::where(['categories_id'=>$id])->get();
-    $products = Products::where(['sub_categories_id'=>$id])->get();
+        $admin = auth()->user()->admin;
+        $subcategories = SubCategories::where(['categories_id'=>$id])->get();
+        $products = Products::where(['sub_categories_id'=>$id])->get();
 
-    if ($subcategories != null){
+        if ($subcategories != null){
 
-        if($admin == 1){
+            if($admin == 1){
 
-            if($products != null){
-                foreach ($products as $product){
-                    $product->sub_categories_id = null;
-                    $product->save();
+                if($products != null){
+                    foreach ($products as $product){
+                        $product->sub_categories_id = null;
+                        $product->save();
+                    }
                 }
+
+                if ($subcategories != null){
+
+                    foreach ($subcategories as $subcategorie) {
+                        $subcategorie->delete();
+                    }
+                }
+            }else{
+                return response()->json([
+                    'status' => '401',
+                    'message' => 'Unauthorized Request'
+                ]);
             }
 
-            if ($subcategories != null){
-
-                foreach ($subcategories as $subcategorie) {
-                    $subcategorie->delete();
-                }
-            }
+            return response()->json("Sub Categories deleted successfully");
         }else{
+
             return response()->json([
-                'status' => '401',
-                'message' => 'Unauthorized Request'
+                'status' => '404',
+                'message' => 'Not Found'
             ]);
         }
-
-        return response()->json("Sub Categories deleted successfully");
-    }else{
-
-        return response()->json([
-            'status' => '404',
-            'message' => 'Not Found'
-        ]);
     }
-}
 
 
 

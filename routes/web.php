@@ -52,11 +52,15 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
 //filter
 $router->post('/search','ProductsController@filter');
 
+
+
 //get products, categories, sub-categories
 $router->get('/products', 'ProductsController@getProducts');
 $router->get('/products/{id}','ProductsController@getProduct');
 $router->get('/categories', 'CategoriesController@getCategories');
 $router->get('/subcategories', 'SubcategoriesController@getSubCategories');
+
+$router->get('/subcategory/{id}', 'ProductsController@getSubCategoryById');
 
 //images
 $router->get('/product/imgs','UploadController@getImages');

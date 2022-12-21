@@ -60,7 +60,11 @@ class ProductsController extends Controller
    public function getProduct($id)
    {    
 
-    $product = Products::where(['id'=>$id])->with('sub_categories')->with('products_images')->first();
+    $product = Products::where(['id'=>$id])
+            ->with('sub_categories')
+            ->with('products_images')
+            ->first();
+
     return response()->json($product);
 
    }
@@ -91,7 +95,8 @@ class ProductsController extends Controller
         }
    }
 
-   public function filter(Request $request){
+   public function filter(Request $request)
+   {
 
         $data = [];
 
@@ -124,10 +129,23 @@ class ProductsController extends Controller
                 }
     
             }
-        }            
+
+        }
         
        
         return response()->json(['Products'=>$data]);
+
+   }
+
+   public function getSubCategoryById($id)
+   {
+
+        $products = Products::where(['sub_categories_id'=>$id])
+                ->with('sub_categories')
+                ->with('products_images')
+                ->get();
+
+        return response()->json($products);
 
    }
 
