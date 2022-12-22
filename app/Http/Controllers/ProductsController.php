@@ -116,23 +116,39 @@ class ProductsController extends Controller
                 ->with('products_images')
                 ->with('sub_categories')
                 ->get();
+                
 
         foreach($products as $product){
 
-            if (($product->price >= $min && $product->price <= $max) || $product->sub_categories_id === $request->sub_categories_id){
-                if ($request->stock === true && $product->stock > 1){
-                    $data[] = $product;
-                }
 
-                if ($request->stock === false && $product->stock < 1){
-                    $data[] = $product;
-                }
-    
+            if ($product->price >= $min && $product->price <= $max){
+
+                if ($request->sub_categories_id != ""){
+
+                    if ($product->sub_categories_id == $request->sub_categories_id){
+                    
+                        if ($request->stock === true && $product->stock > 1){
+                            $data[] = $product;
+                        }
+
+                        if ($request->stock === false && $product->stock < 1){
+                            $data[] = $product;
+                        }
+                    }
+                }else{
+                    if ($request->stock === true && $product->stock > 1){
+                        $data[] = $product;
+                    }
+
+                    if ($request->stock === false && $product->stock < 1){
+                        $data[] = $product;
+                    }
+                }   
+
             }
 
         }
         
-       
         return response()->json(['Products'=>$data]);
 
    }
