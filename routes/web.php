@@ -42,6 +42,7 @@ $router->group(['middleware'=>'jwt.verify'],function($router) {
     //Orders
     $router->get('/order','OrderController@getOrder');
     $router->get('/order/{id}','OrderController@getOrderById');
+    $router->post('/order/item','OrderController@addOrderItems');
     $router->post('/order', 'OrderController@addOrder');
 
     // Acessos

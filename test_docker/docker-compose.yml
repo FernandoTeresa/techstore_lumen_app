@@ -32,11 +32,11 @@ services:
     ports:
       - "85:80"
     volumes:
-      - ../../TechStore_lumen_api/:/var/www/html/app/
+      - ../../techstore_lumen_app/:/var/www/html/app/
   php:
     build: images/php
     volumes:
-      - ../../TechStore_lumen_api/:/var/www/html/app/
+      - ../../techstore_lumen_app/:/var/www/html/app/
     working_dir: /var/www/html/
     command: php-fpm
     links:

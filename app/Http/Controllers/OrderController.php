@@ -36,12 +36,35 @@ class OrderController extends Controller
 
         $order = new Order ($payload);
         $order->save($payload);
+
+        return response()->json($order);
     
     }
 
     public function getOrderById($id){
         $orders = Order::where(['id'=>$id])->with('order_items')->first();
         return response()->json($orders);
+    }
+
+    public function addOrderItems(Request $request){
+
+        $payload = $request->all();
+
+        $this->validate($request, [
+            'count' => 'required',
+            'unitprice' => 'required',
+            'product_id'=> 'required',
+            'order_id' => 'required'
+        ]);
+
+        $orderItems = new OrderItem($payload);
+        
+        if ($orderItems->save($payload)){
+
+        }
+
+        return response()->json($orderItems);
+
     }
 
 
